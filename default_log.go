@@ -30,32 +30,11 @@ func (l *MyLog)Close(){
 }
 
 var (
-	logs *Log
+	Logs *Log
 )
 
 func init(){
 	l := newMyLog()
-	logs = NewLog("./",l)
-	logs.Run()
-}
-
-
-func Info(format string,args ...interface{}){
-	logs.Info(format,args...)
-}
-
-func Debug(format string,args ...interface{}){
-	logs.Debug(format,args...)
-}
-
-func Error(format string,args ...interface{}){
-	logs.Error(format,args...)
-}
-
-func Warning(format string,args ...interface{}){
-	logs.Warning(format,args...)
-}
-
-func Close(){
-	logs.Close()
+	Logs = NewLog("./",l)
+	Logs.Run()
 }
