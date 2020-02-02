@@ -1,14 +1,32 @@
 package log
 
-import "time"
+import (
+	"os"
+)
 
 type MyLog struct {
+	file *os.File
+}
+
+func newMyLog()*MyLog{
+	return &MyLog{
+		file:os.Stdout,
+	}
+}
+func (l *MyLog)GetFile()*os.File{
+	return l.file
+}
+
+func (l *MyLog)GetFileName()string{
+	return "stdout"
+}
+
+func (l *MyLog)Flush(){
 
 }
 
-func (l *Log)GetFileName()string{
-	t := time.Now()
-	return "runtime_"+t.Format("2006-01-02-15")+".log"
+func (l *MyLog)Close(){
+	l.file.Close()
 }
 
 var (
@@ -16,8 +34,8 @@ var (
 )
 
 func init(){
-	l := Log{}
-	logs = NewLog("./",&l)
+	l := newMyLog()
+	logs = NewLog("./",l)
 	logs.Run()
 }
 
@@ -36,4 +54,8 @@ func Error(format string,args ...interface{}){
 
 func Warning(format string,args ...interface{}){
 	logs.Warning(format,args...)
+}
+
+func Close(){
+	logs.Close()
 }
